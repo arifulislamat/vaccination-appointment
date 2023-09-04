@@ -1,0 +1,27 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Appointment extends Model
+{
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
+     */
+    protected $fillable = [
+        'user_id',
+        'vaccine_id',
+        'hospital_id',
+        'appointment_datetime',
+        'status'
+    ];
+
+    protected $casts = [
+        'appointment_datetime' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+}

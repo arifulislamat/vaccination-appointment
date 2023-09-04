@@ -1,0 +1,20 @@
+version: '3.8'
+
+networks:
+  vaccination_app:
+    name: vaccination_app
+    driver: bridge
+
+services:
+  vaccination_appointment_app:
+    container_name: vaccination_appointment_app
+    image: ${AUTH_IMAGE}
+    ports:
+      - "8001:19090"
+    environment:
+      - APP_ENV=${APP_ENV}
+      - APP_KEY=${APP_KEY}
+    restart: unless-stopped
+    tty: true
+    networks:
+      - vaccination_app

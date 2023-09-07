@@ -14,10 +14,11 @@ phases:
   install:
     runtime-versions:
       docker: 19
+      php: 8.1
     commands:
       - |
         sudo yum update
-        yum install -y php8.1 php8.1-curl php8.1-common \
+        yum install -y php8.1-curl php8.1-common \
           php8.1-pdo php8.1-pdo_mysql php8.1-mysqli \
           php8.1-mbstring php8.1-xml php8.1-openssl php8.1-json \
           php8.1-phar php8.1-dom php8.1-session php8.1-pcntl

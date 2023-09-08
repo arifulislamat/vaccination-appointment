@@ -1,19 +1,23 @@
-version: '3.8'
+version: "3.8"
 
 networks:
   vaccination_app:
-    name: vaccination_app
-    driver: bridge
+    external: true
 
 services:
   vaccination_appointment_app:
-    container_name: vaccination_appointment_app
-    image: ${AUTH_IMAGE}
+    container_name: ${APPOINTMENT_CONTAINER_NAME}
+    image: ${APPOINTMENT_IMAGE}
     ports:
-      - "8001:19090"
+      - "${APPOINTMENT_PORT}:19090"
     environment:
       - APP_ENV=${APP_ENV}
       - APP_KEY=${APP_KEY}
+      - DB_PORT=${DB_PORT}
+      - DB_HOST=${DB_HOST}
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
     restart: unless-stopped
     tty: true
     networks:

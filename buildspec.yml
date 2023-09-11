@@ -55,7 +55,8 @@ phases:
 
 artifacts:
   files:
-    - ./appspec.yml
+    - appspec.yml
+    - docker-compose.prod.yaml
     - scripts/before_install.sh
     - scripts/start.sh
     - imagedefinitions.json

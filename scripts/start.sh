@@ -7,7 +7,7 @@ aws_default_region=$(aws ssm get-parameter --name default-region-aws --query "Pa
 aws_account_id=$(aws ssm get-parameter --name account-id --query "Parameter.Value" --output text)
 
 echo Logging in to Amazon ECR...
-aws ecr get-login-password --region $aws_default_region | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$aws_default_region.amazonaws.com
+aws ecr get-login-password --region $aws_default_region | docker login --username AWS --password-stdin $aws_account_id.dkr.ecr.$aws_default_region.amazonaws.com
 
 image_tag=appointment-latest
 docker pull $aws_account_id.dkr.ecr.$aws_default_region.amazonaws.com/vaccination-system-images:$image_tag

@@ -6,9 +6,6 @@ files:
   - source: /scripts
     destination: /var/www/appointment
 
-  - source: /docker-compose.prod.yaml
-    destination: /var/www/appointment/scripts
-
 hooks:
   BeforeInstall:
     - location: scripts/before_install.sh

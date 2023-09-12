@@ -2,7 +2,8 @@ version: "3.8"
 
 networks:
   vaccination_app:
-    external: true
+    name: vaccination_app
+    driver: bridge
 
 services:
   vaccination_appointment_app:

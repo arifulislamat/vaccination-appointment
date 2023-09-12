@@ -5,7 +5,12 @@ env:
   variables:
     IMAGE_TAG: appointment-latest
     IMAGE_REPO_NAME: vaccination-system-images
+    DB_PORT: 3306
+    DB_DATABASE: appointment
+    DB_USERNAME: root
   parameter-store:
+    DB_PASSWORD: appointment-db-password
+    DB_HOST: appointment-db-host
     ECR_REGISTRY_URI: ecr-registry-uri
     AWS_DEFAULT_REGION: default-region-aws
     AWS_ACCOUNT_ID: account-id
@@ -50,6 +55,7 @@ phases:
       - echo Pushing the Docker image...
       - docker push $ECR_REGISTRY_URI:$IMAGE_TAG
       - echo Writing image definitions file...
+      - printf 'DB_PORT=%s\nDB_HOST=%s\nDB_DATABASE=%s\nDB_USERNAME=%s\nDB_PASSWORD=%s\nAPPOINTMENT_IMAGE=%s\n' $DB_PORT $DB_HOST $DB_DATABASE $DB_USERNAME $DB_PASSWORD $IMAGE_REPO_NAME:IMAGE_TAG  > .env
       - printf '[{"name":"vaccine-reg","imageUri":"%s"}]' $ECR_REGISTRY_URI:$IMAGE_TAG > imagedefinitions.json
       - cat imagedefinitions.json
 

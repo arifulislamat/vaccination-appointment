@@ -16,6 +16,7 @@ docker tag $aws_account_id.dkr.ecr.$aws_default_region.amazonaws.com/vaccination
 docker stop $container_name
 docker rm $container_name
 
+echo $(pwd)
 env_file_path=$(pwd)/../.env
 docker run -d -it -p 8001:19090 --env-file $env_file_path --name $container_name $container_name:latest
 

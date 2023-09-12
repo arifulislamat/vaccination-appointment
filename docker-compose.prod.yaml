@@ -9,6 +9,8 @@ services:
   vaccination_appointment_app:
     container_name: vaccination_${APPOINTMENT_IMAGE}
     image: ${APPOINTMENT_IMAGE}
+    env_file:
+      - app.env
     ports:
       - "8001:19090"
     environment:

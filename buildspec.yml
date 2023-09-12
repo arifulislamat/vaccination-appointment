@@ -55,14 +55,14 @@ phases:
       - echo Pushing the Docker image...
       - docker push $ECR_REGISTRY_URI:$IMAGE_TAG
       - echo Writing image definitions file...
-      - printf 'DB_PORT=%s\nDB_HOST=%s\nDB_DATABASE=%s\nDB_USERNAME=%s\nDB_PASSWORD=%s\nAPPOINTMENT_IMAGE=%s\n' $DB_PORT $DB_HOST $DB_DATABASE $DB_USERNAME $DB_PASSWORD $IMAGE_REPO_NAME:IMAGE_TAG  > app.env
+      - printf 'DB_PORT=%s\nDB_HOST=%s\nDB_DATABASE=%s\nDB_USERNAME=%s\nDB_PASSWORD=%s\nAPPOINTMENT_IMAGE=%s\n' $DB_PORT $DB_HOST $DB_DATABASE $DB_USERNAME $DB_PASSWORD $IMAGE_REPO_NAME:IMAGE_TAG  > .env
       - printf '[{"name":"vaccine-reg","imageUri":"%s"}]' $ECR_REGISTRY_URI:$IMAGE_TAG > imagedefinitions.json
       - cat imagedefinitions.json
-      - cat app.env
+      - cat .env
 
 artifacts:
   files:
-    - app.env
+    - .env
     - appspec.yml
     - docker-compose.prod.yaml
     - scripts/before_install.sh

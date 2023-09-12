@@ -1,22 +1,22 @@
 #!/bin/bash
 
 # Container name
-CONTAINER_NAME="vaccination-appointment"
+container_name="vaccination-appointment"
 
-AWS_DEFAULT_REGION=$(aws ssm get-parameter --name default-region-aws --query "Parameter.Value" --output text)
-AWS_ACCOUNT_ID=$(aws ssm get-parameter --name account-id --query "Parameter.Value" --output text)
+aws_default_region=$(aws ssm get-parameter --name default-region-aws --query "Parameter.Value" --output text)
+aws_account_id=$(aws ssm get-parameter --name account-id --query "Parameter.Value" --output text)
 
 echo Logging in to Amazon ECR...
-aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+aws ecr get-login-password --region $aws_default_region | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$aws_default_region.amazonaws.com
 
-IMAGE_TAG=appointment-latest
-docker pull $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/vaccination-system-images:$IMAGE_TAG
-docker tag $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/vaccination-system-images:$IMAGE_TAG $CONTAINER_NAME:latest
+image_tag=appointment-latest
+docker pull $aws_account_id.dkr.ecr.$aws_default_region.amazonaws.com/vaccination-system-images:$image_tag
+docker tag $aws_account_id.dkr.ecr.$aws_default_region.amazonaws.com/vaccination-system-images:$image_tag $container_name:latest
 
-docker stop $CONTAINER_NAME
-docker rm $CONTAINER_NAME
+docker stop $container_name
+docker rm $container_name
 
-docker run -d -it -p 8001:19090 --env-file ../.env --name $CONTAINER_NAME $CONTAINER_NAME:latest
+docker run -d -it -p 8001:19090 --env-file ../.env --name $container_name $container_name:latest
 
 # docker compose -f ../docker-compose.prod.yaml down -v
 # docker image prune -f

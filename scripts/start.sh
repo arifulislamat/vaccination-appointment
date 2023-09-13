@@ -25,11 +25,11 @@ docker stop $container_name
 docker rm $container_name
 
 docker run -d -it -p 8001:19090 \
-    --e DB_PORT=$db_port \
-    --e DB_HOST=$db_host \
-    --e DB_DATABASE=$db_database \
-    --e DB_USERNAME=$db_username \
-    --e DB_PASSWORD=$db_password \
+    -e DB_PORT=$db_port \
+    -e DB_HOST=$db_host \
+    -e DB_DATABASE=$db_database \
+    -e DB_USERNAME=$db_username \
+    -e DB_PASSWORD=$db_password \
     --name $container_name $container_name:latest
 
 # docker compose -f ../docker-compose.prod.yaml down -v

@@ -16,9 +16,11 @@ aws_account_id=$(aws ssm get-parameter --with-decryption --name account-id --que
 echo Logging in to Amazon ECR...
 aws ecr get-login-password --region $aws_default_region | docker login --username AWS --password-stdin $aws_account_id.dkr.ecr.$aws_default_region.amazonaws.com
 
+echo Pulling from Amazon ECR...
 docker pull $aws_account_id.dkr.ecr.$aws_default_region.amazonaws.com/vaccination-system-images:$image_tag
 docker tag $aws_account_id.dkr.ecr.$aws_default_region.amazonaws.com/vaccination-system-images:$image_tag $container_name:latest
 
+echo Runing docker image...
 docker stop $container_name
 docker rm $container_name
 

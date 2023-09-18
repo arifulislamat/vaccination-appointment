@@ -17,4 +17,4 @@ php artisan cache:clear
 php artisan migrate
 php artisan db:seed
 
-exec "$@" set 10 sec sleep
+exec "$@"

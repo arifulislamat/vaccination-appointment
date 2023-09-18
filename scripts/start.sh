@@ -26,7 +26,7 @@ docker rm $container_name
 
 docker network create -d bridge vaccination_app
 
-docker run -d -it -p 8001:19090 \
+docker run -d -it -p 8008:19090 \
     -e DB_PORT=$db_port \
     -e DB_HOST=$db_host \
     -e DB_DATABASE=$db_database \

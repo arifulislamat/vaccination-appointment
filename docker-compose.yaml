@@ -16,7 +16,7 @@ services:
     container_name: vaccination_appointment_app
     image: vaccination_app/vaccination_appointment_app
     ports:
-      - "8001:19090"
+      - "8008:19090"
     environment:
       - APP_ENV=${APP_ENV}
       - APP_KEY=${APP_KEY}
@@ -32,7 +32,6 @@ services:
   # Mysql database
   vaccination_appointment_db:
     image: mysql:5.7
-    command: --default-authentication-plugin=mysql_native_password
     container_name: vaccination_appointment_db
     restart: unless-stopped
     tty: true

@@ -24,6 +24,8 @@ echo Runing docker image...
 docker stop $container_name
 docker rm $container_name
 
+docker network create -d bridge vaccination_app
+
 docker run -d -it -p 8001:19090 \
     -e DB_PORT=$db_port \
     -e DB_HOST=$db_host \
@@ -31,8 +33,3 @@ docker run -d -it -p 8001:19090 \
     -e DB_USERNAME=$db_username \
     -e DB_PASSWORD=$db_password \
     --name $container_name $container_name:latest
-
-# docker compose -f ../docker-compose.prod.yaml down -v
-# docker image prune -f
-# docker buildx prune -f
-# docker compose -f ../docker-compose.prod.yaml up -d

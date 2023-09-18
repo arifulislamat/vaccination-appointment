@@ -24,4 +24,14 @@ class Appointment extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+    public function vaccine()
+    {
+        return $this->belongsTo(Vaccine::class);
+    }
+
+    public function hospital()
+    {
+        return $this->belongsTo(Hospital::class);
+    }
 }

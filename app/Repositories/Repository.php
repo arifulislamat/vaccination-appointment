@@ -15,7 +15,9 @@ class Repository
 
     public function getAppointmentById($appointmentId)
     {
-        return Appointment::where('id', $appointmentId)->first();
+        return Appointment::where('id', $appointmentId)
+            ->with(['vaccine', 'hospital'])
+            ->first();
     }
 
     public function getOneByUserAndStatusConfirmed($userId)
@@ -27,7 +29,9 @@ class Repository
 
     public function getUserAppointments($userId)
     {
-        return Appointment::where('user_id', $userId)->get();
+        return Appointment::where('user_id', $userId)
+            ->with(['vaccine', 'hospital'])
+            ->get();
     }
 
     public function createAppointment($data)

@@ -17,12 +17,15 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->get('vaccines', 'Controller@vaccines');
-$router->get('vaccines/{vaccineId}', 'Controller@getVaccine');
+$router->group(['prefix' => 'api'], function () use ($router) {
+    $router->get('vaccines', 'Controller@vaccines');
+    $router->get('vaccines/{vaccineId}', 'Controller@getVaccine');
 
-$router->get('hospitals', 'Controller@hospitals');
-$router->get('hospitals/{hospitalId}', 'Controller@getHospital');
+    $router->get('hospitals', 'Controller@hospitals');
+    $router->get('hospitals/{hospitalId}', 'Controller@getHospital');
 
-$router->post('users/appointment', 'Controller@storeAppointment');
-$router->get('users/{userId}/appointment', 'Controller@getUserAppointment');
-$router->get('users/{userId}/appointments', 'Controller@getUserAppointments');
+    $router->post('users/appointment', 'Controller@storeAppointment');
+    $router->get('users/{userId}/appointment', 'Controller@getUserAppointment');
+    $router->get('users/{userId}/appointments', 'Controller@getUserAppointments');
+    $router->get('appointments/{appointmentId}', 'Controller@getAppointment');
+});

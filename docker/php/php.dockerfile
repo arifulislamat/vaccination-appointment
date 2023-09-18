@@ -1,23 +1,11 @@
-FROM php:8.1-fpm-alpine AS php-base
+FROM php:8.1-fpm AS php-base
 
 WORKDIR /var/www/html
 
-# Install Additional dependencies
-RUN apk update && apk add --no-cache \
-    build-base shadow vim curl \
-    php81-curl \
-    php81-common \
-    php81-pdo \
-    php81-pdo_mysql \
-    php81-mysqli \
-    php81-mbstring \
-    php81-xml \
-    php81-openssl \
-    php81-json \
-    php81-phar \
-    php81-dom \
-    php81-session \
-    php81-pcntl
+RUN apt-get update && apt-get install -y \
+    libzip-dev \
+    zip \
+    && docker-php-ext-install zip
 
 RUN docker-php-ext-install pdo pdo_mysql
 RUN docker-php-ext-enable pdo_mysql

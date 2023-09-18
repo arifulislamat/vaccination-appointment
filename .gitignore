@@ -5,5 +5,4 @@ Homestead.yaml
 .env
 .phpunit.result.cache
 storage/logs
-storage/framework
 docker/mysql/data

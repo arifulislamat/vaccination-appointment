@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Log;
 use App\Repositories\Repository;
 use Illuminate\Http\Request;
 use Laravel\Lumen\Routing\Controller as BaseController;
@@ -56,5 +57,10 @@ class Controller extends BaseController
     public function getVaccine($vaccineId)
     {
         return $this->repository->getVaccineById($vaccineId);
+    }
+
+    public function getAppointment($appointmentId)
+    {
+        return $this->repository->getAppointmentById($appointmentId);
     }
 }

@@ -2,15 +2,24 @@
 
 namespace App\Repositories;
 
+use Exception;
 use App\Models\Appointment;
 use App\Models\Hospital;
 use App\Models\Vaccine;
+use App\Events\AppointmentCreated;
+use App\Events\AppointmentUpdated;
+use Illuminate\Support\Facades\Event;
 
 class Repository
 {
     public function getAllAppointment()
     {
         return Appointment::all();
+    }
+
+    public function getAppointment($appointmentId)
+    {
+        return Appointment::where('id', $appointmentId)->first();
     }
 
     public function getAppointmentById($appointmentId)
@@ -37,7 +46,9 @@ class Repository
     public function createAppointment($data)
     {
         $data['status'] = "pending";
-        return Appointment::create($data);
+        $appointment = Appointment::create($data);
+        Event::fire(new AppointmentCreated($appointment));
+        return $appointment;
     }
 
     public function getAllHospital()
@@ -68,5 +79,23 @@ class Repository
     public function createVaccine($data)
     {
         return Vaccine::create($data);
+    }
+
+    public function updateAppointment($appointment, $input)
+    {
+        try {
+            Appointment::where('id', $appointment->id)
+                ->update($input);
+
+            $appointment = Appointment::where('id', $appointment->id)
+                ->with(['vaccine', 'hospital'])
+                ->first();
+
+            Event::fire(new AppointmentUpdated($appointment));
+        } catch (Exception $e) {
+            return false;
+        }
+
+        return true;
     }
 }

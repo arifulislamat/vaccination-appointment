@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Log;
 use App\Repositories\Repository;
 use Illuminate\Http\Request;
 use Laravel\Lumen\Routing\Controller as BaseController;
@@ -62,5 +61,11 @@ class Controller extends BaseController
     public function getAppointment($appointmentId)
     {
         return $this->repository->getAppointmentById($appointmentId);
+    }
+
+    public function updateAppointment($appointmentId, Request $request)
+    {
+        $appointment = $this->repository->getAppointment($appointmentId);
+        $this->repository->updateAppointment($appointment, $request->all());
     }
 }

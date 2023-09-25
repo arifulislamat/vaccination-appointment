@@ -6,9 +6,6 @@ use Exception;
 use App\Models\Appointment;
 use App\Models\Hospital;
 use App\Models\Vaccine;
-use App\Events\AppointmentCreated;
-use App\Events\AppointmentUpdated;
-use Illuminate\Support\Facades\Event;
 
 class Repository
 {
@@ -47,7 +44,6 @@ class Repository
     {
         $data['status'] = "pending";
         $appointment = Appointment::create($data);
-        Event::fire(new AppointmentCreated($appointment));
         return $appointment;
     }
 
@@ -90,8 +86,6 @@ class Repository
             $appointment = Appointment::where('id', $appointment->id)
                 ->with(['vaccine', 'hospital'])
                 ->first();
-
-            Event::fire(new AppointmentUpdated($appointment));
         } catch (Exception $e) {
             return false;
         }

@@ -30,11 +30,20 @@ spec:
             - name: APP_ENV
               value: "${APP_ENV}"
             - name: DB_PORT
-              value: "${DB_PORT}"
+              valueFrom:
+                configMapKeyRef:
+                  name: appointment-config
+                  key: DB_PORT
             - name: DB_DATABASE
-              value: "${DB_DATABASE}"
+              valueFrom:
+                configMapKeyRef:
+                  name: appointment-config
+                  key: DB_DATABASE
             - name: DB_USERNAME
-              value: "${DB_USERNAME}"
+              valueFrom:
+                configMapKeyRef:
+                  name: appointment-config
+                  key: DB_USERNAME
             - name: DB_HOST
               valueFrom:
                 secretKeyRef:

@@ -41,6 +41,7 @@ artifacts:
     - buildspec-trivy-scan.yml
     - buildspec-push.yml
     - buildspec-deploy.yml
+    - k8s-manifests/appointment-configmap.yaml
     - k8s-manifests/appointment-secret.yaml
     - k8s-manifests/appointment-dev.yaml
     

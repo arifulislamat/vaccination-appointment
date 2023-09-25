@@ -37,6 +37,7 @@ phases:
       - echo "Apply changes to kube manifests"  
       - kubectl get pods -A
     #   - kubectl delete -f k8s-manifests/deployment-dev.yml
+      - kubectl apply -f k8s-manifests/appointment-configmap.yaml -n vaccination-system-dev
       - kubectl apply -f k8s-manifests/appointment-secret.yaml
       - kubectl apply -f k8s-manifests/appointment-dev.yaml
 

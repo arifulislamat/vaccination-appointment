@@ -44,5 +44,7 @@ artifacts:
     - k8s-manifests/appointment-configmap.yaml
     - k8s-manifests/appointment-secret.yaml
     - k8s-manifests/appointment-dev.yaml
+    - k8s-manifests/appointment-service.yaml
+    - k8s-manifests/appointment-autoscaling.yaml
     
 privilegedMode: true

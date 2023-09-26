@@ -1,9 +1,3 @@
-kind: Namespace
-apiVersion: v1
-metadata:
-  name: vaccination-system-dev
-  labels:
-    name: vms
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -70,48 +64,4 @@ spec:
             requests:
               cpu: 100m
               memory: 250Mi
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: appointment-service
-  namespace: vaccination-system-dev
-  labels:
-    svc: vms
-spec:
-  type: ClusterIP
-  selector:
-    vms: appointment
-  ports:
-  - name: web
-    protocol: TCP
-    port: 8001
-    targetPort: 19090
 
-
----
-apiVersion: autoscaling/v2
-kind: HorizontalPodAutoscaler
-metadata:
-  name: appointment-service-hpa
-  namespace: vaccination-system-dev
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: appointment-service-deployment
-  minReplicas: 1
-  maxReplicas: 2
-  metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 75
-  - type: Resource
-    resource:
-      name: memory
-      target:
-        type: AverageValue
-        averageValue: 500Mi

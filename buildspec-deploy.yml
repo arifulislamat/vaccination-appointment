@@ -2,14 +2,11 @@ version: 0.2
 
 env:
   shell: "/bin/sh"
-  variables:
-    DB_PORT: 3306
-    DB_DATABASE: appointment
-    DB_USERNAME: vms-user
     
   parameter-store:
-    DB_HOST: db-host
-    DB_PASSWORD: db-password
+     CLUSTER_NAME: Cluster_Name
+     AWS_DEFAULT_REGION: default-region-aws
+     ACCOUNT_ID: account-id
     
 phases:
   install:
@@ -24,24 +21,23 @@ phases:
   build:
     commands:
       - echo "Setting Environment Variables related to AWS CLI for Kube Config Setup"
-      - CREDENTIALS=$(aws sts assume-role --role-arn arn:aws:iam::678554781153:role/service-role/Vaccination-CodeBuildServiceRole --role-session-name eks-codebuild --region ap-southeast-1)
+      - CREDENTIALS=$(aws sts assume-role --role-arn arn:aws:iam::$ACCOUNT_ID:role/service-role/Vaccination-CodeBuildServiceRole --role-session-name eks-codebuild --region $AWS_DEFAULT_REGION1)
       - export AWS_ACCESS_KEY_ID="$(echo ${CREDENTIALS} | jq -r '.Credentials.AccessKeyId')"
       - export AWS_SECRET_ACCESS_KEY="$(echo ${CREDENTIALS} | jq -r '.Credentials.SecretAccessKey')"
       - export AWS_SESSION_TOKEN="$(echo ${CREDENTIALS} | jq -r '.Credentials.SessionToken')"
       - export AWS_EXPIRATION=$(echo ${CREDENTIALS} | jq -r '.Credentials.Expiration')
       - echo "Update Kube Config"
-      - aws eks update-kubeconfig --name vaccination-system-eks --region ap-southeast-1
+      - aws eks update-kubeconfig --name $CLUSTER_NAME --region $AWS_DEFAULT_REGION
       
   post_build:
     commands:
       - echo "Apply changes to kube manifests"  
       - kubectl get pods -A
-    #   - kubectl delete -f k8s-manifests/deployment-dev.yml
-      - kubectl apply -f k8s-manifests/appointment-configmap.yaml -n vaccination-system-dev
+      - kubectl apply -f k8s-manifests/appointment-configmap.yaml
       - kubectl apply -f k8s-manifests/appointment-secret.yaml
-      - kubectl apply -f k8s-manifests/appointment-dev.yaml
+      - kubectl apply -f k8s-manifests/appointment-service.yaml
+      - kubectl apply -f k8s-manifests/appointment-autoscaling.yaml
+      - envsubst < k8s-manifests/appointment-dev.yaml | kubectl apply -f -
+      - envsubst < k8s-manifests/appointment-dev.yaml | kubectl rollout restart -f -
 
-
-
-    
 privilegedMode: true

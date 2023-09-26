@@ -2,6 +2,9 @@ version: 0.2
 
 env:
   shell: "/bin/sh"
+
+  variables:
+    IMAGE_TAG: appointment-service
     
   parameter-store:
      CLUSTER_NAME: Cluster_Name

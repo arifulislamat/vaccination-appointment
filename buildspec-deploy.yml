@@ -7,6 +7,7 @@ env:
      CLUSTER_NAME: Cluster_Name
      AWS_DEFAULT_REGION: default-region-aws
      ACCOUNT_ID: account-id
+     ECR_REGISTRY_URI: ecr-registry-uri
     
 phases:
   install:

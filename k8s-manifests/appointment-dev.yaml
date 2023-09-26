@@ -34,6 +34,11 @@ spec:
                 configMapKeyRef:
                   name: appointment-config
                   key: DB_PORT
+            - name: DB_CONNECTION
+              valueFrom:
+                configMapKeyRef:
+                  name: appointment-config
+                  key: DB_CONNECTION
             - name: DB_DATABASE
               valueFrom:
                 configMapKeyRef:

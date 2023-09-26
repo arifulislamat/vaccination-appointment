@@ -2,7 +2,9 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: appointment-config
+  namespace: vaccination-system-dev
 data:
   DB_PORT: "3306"
   DB_DATABASE: "appointment"
   DB_USERNAME: "vms-user"
+  DB_CONNECTION: "mysql"

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: appointment-service-pod
-          image: 678554781153.dkr.ecr.ap-southeast-1.amazonaws.com/vaccination-system-images:appointment-service
+          image: ${ECR_REGISTRY_URI}:${IMAGE_TAG}
           imagePullPolicy: Always
           env:
             - name: APP_KEY

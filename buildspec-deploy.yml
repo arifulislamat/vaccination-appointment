@@ -7,7 +7,7 @@ env:
     IMAGE_TAG: appointment-service
     
   parameter-store:
-     CLUSTER_NAME: Cluster_Name
+     CLUSTER_NAME: cluster-name
      AWS_DEFAULT_REGION: default-region-aws
      ACCOUNT_ID: account-id
      ECR_REGISTRY_URI: ecr-registry-uri

@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Appointment;
 use App\Repositories\Repository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Events\AppointmentCreated;
 use App\Events\AppointmentUpdated;
-use Illuminate\Support\Facades\Event;
 use Laravel\Lumen\Routing\Controller as BaseController;
 
 class Controller extends BaseController
@@ -72,8 +72,8 @@ class Controller extends BaseController
     public function updateAppointment($appointmentId, Request $request)
     {
         $appointment = $this->repository->getAppointment($appointmentId);
-        $response = $this->repository->updateAppointment($appointment, $request->all());
-        $this->eventUpdateAppointment($appointment, $request->get('user_name'));
+        $response = $this->repository->updateAppointment($appointment, $request->only('user_id', 'vaccine_id', 'hospital_id', 'status', 'appointment_datetime'));
+        $this->eventUpdateAppointment($appointment, $request);
         return $response;
     }
 
@@ -82,14 +82,17 @@ class Controller extends BaseController
         $appointment = $this->repository->getAppointmentById($appointment->id);
 
         $data = new \stdClass();
+        $data->user_id = $request->get('user_id');
         $data->username = $request->get('user_name');
         $data->email = $request->get('user_email');
         $data->vaccine_id = $appointment->vaccine->id;
         $data->vaccine = $appointment->vaccine->name;
+        $data->hospital_id = $appointment->hospital->id;
         $data->hospital = $appointment->hospital->name;
         $data->date = $appointment->appointment_datetime;
+        $data->status = $appointment->status;
 
-        Event::fire(new AppointmentUpdated($data));
+        event(new AppointmentUpdated($data));
     }
 
     public function eventCreateAppointment(Appointment $appointment, $request)
@@ -97,13 +100,15 @@ class Controller extends BaseController
         $appointment = $this->repository->getAppointmentById($appointment->id);
 
         $data = new \stdClass();
+        $data->user_id = $request->get('user_id');
         $data->username = $request->get('user_name');
         $data->email = $request->get('user_email');
         $data->vaccine_id = $appointment->vaccine->id;
         $data->vaccine = $appointment->vaccine->name;
+        $data->hospital_id = $appointment->hospital->id;
         $data->hospital = $appointment->hospital->name;
         $data->date = $appointment->appointment_datetime;
 
-        Event::fire(new AppointmentCreated($data));
+        event(new AppointmentCreated($data));
     }
 }

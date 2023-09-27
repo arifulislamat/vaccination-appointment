@@ -86,10 +86,10 @@ class Repository
             $appointment = Appointment::where('id', $appointment->id)
                 ->with(['vaccine', 'hospital'])
                 ->first();
+            return $appointment;
         } catch (Exception $e) {
+            dd($e);
             return false;
         }
-
-        return true;
     }
 }

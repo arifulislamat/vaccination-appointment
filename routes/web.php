@@ -25,7 +25,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('hospitals/{hospitalId}', 'Controller@getHospital');
 
     $router->post('users/appointment', 'Controller@storeAppointment');
-    $router->put('users/appointment/{appointmentId}', 'Controller@updateAppointment');
+    $router->post('users/appointment/{appointmentId}', 'Controller@updateAppointment');
     $router->get('users/{userId}/appointment', 'Controller@getUserAppointment');
     $router->get('users/{userId}/appointments', 'Controller@getUserAppointments');
     $router->get('appointments/{appointmentId}', 'Controller@getAppointment');

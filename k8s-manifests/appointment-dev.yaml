@@ -49,7 +49,36 @@ spec:
                 secretKeyRef:
                   name: db-credentials
                   key: db-password
-            
+            - name: SQS_REGION
+              valueFrom:
+                configMapKeyRef:
+                  name: registration-config
+                  key: SQS_REGION
+            - name: SQS_PREFIX
+              valueFrom:
+                configMapKeyRef:
+                  name: registration-config
+                  key: SQS_PREFIX
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: registration-config
+                  key: AWS_ACCESS_KEY_ID
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: registration-config
+                  key: AWS_SECRET_ACCESS_KEY
+            - name: AWS_DEFAULT_REGION
+              valueFrom:
+                configMapKeyRef:
+                  name: registration-config
+                  key: AWS_DEFAULT_REGION
+            - name: AWS_BUCKET
+              valueFrom:
+                configMapKeyRef:
+                  name: registration-config
+                  key: AWS_BUCKET
       
           ports:
             - containerPort: 19090

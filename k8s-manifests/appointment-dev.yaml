@@ -19,10 +19,6 @@ spec:
           image: ${ECR_REGISTRY_URI}:${IMAGE_TAG}
           imagePullPolicy: Always
           env:
-            - name: APP_KEY
-              value: "${APP_KEY}"
-            - name: APP_ENV
-              value: "${APP_ENV}"
             - name: DB_PORT
               valueFrom:
                 configMapKeyRef:

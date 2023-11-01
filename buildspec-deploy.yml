@@ -24,7 +24,6 @@ phases:
       
   build:
     commands:
-      - export DEBUG=true
       - echo "Setting Environment Variables related to AWS CLI for Kube Config Setup"
       - echo "CLUSTER_NAME: $CLUSTER_NAME"
       - echo "ACCOUNT_ID: $ACCOUNT_ID"

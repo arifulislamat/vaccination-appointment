@@ -8,3 +8,4 @@ data:
   DB_DATABASE: "appointment"
   DB_USERNAME: "vms-user"
   DB_CONNECTION: "mysql"
+  SQS_REGION: "ap-southeast-1"
